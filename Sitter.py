@@ -7,9 +7,10 @@ class Sitter(object):
         self.startTime = startTime
         self.endTime   = endTime
         self.bedTime   = bedTime
-        self.payRates  = { 'startToBed':    0, \
-                           'bedToMidnight': 0, \
-                           'midnightToEnd': 0  }
+        # hourly rates for the 3 defined segments of time 
+        self.payRates  = { 'startToBed':    12, \
+                           'bedToMidnight': 8,  \
+                           'midnightToEnd': 16  }
     def validTimes(self):
         '''
         method to determine whether the sitter instance is valid 

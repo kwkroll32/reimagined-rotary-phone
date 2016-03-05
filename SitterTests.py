@@ -21,5 +21,16 @@ class SitterTest(unittest.TestCase):
     def testSitterTimesAreValid(self):
         self.assertTrue(self.sitter.validTimes())
         
+    def testSitterPayCalcNoBedTime(self):
+        startTime = time(17,0,0) 
+        endTime = time(21,0,0) 
+        bedTime = time(22,0,0) 
+        # sitter works for 4 hrs 
+        # note that kids never go to bed and end time is before midnight 
+        sitter = Sitter(startTime=startTime, endTime=endTime, bedTime=bedTime)
+        calculatedPay = sitter.calcPay()
+        expectedPay = sitter.payRates['startToBed']*4
+        self.assertEqual(calculatedPay, expectedPay)
+        
 if __name__ == "__main__":
     unittest.main()

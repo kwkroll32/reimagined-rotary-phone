@@ -1,5 +1,5 @@
 import unittest
-import datetime
+from datetime import time
 
 from Sitter import Sitter
 
@@ -8,18 +8,18 @@ class SitterTest(unittest.TestCase):
         self.assertTrue(True)
         
     def testSitterInit(self):
-        startTime = datetime.time(17,0,0) # 24-hr time in hr, min, sec
-        endTime = datetime.time(21,0,0) # 24-hr time in hr, min, sec
-        bedTime = datetime.time(19,0,0) # 24-hr time in hr, min, sec
+        startTime = time(17,0,0) # 24-hr time in hr, min, sec
+        endTime = time(21,0,0) # 24-hr time in hr, min, sec
+        bedTime = time(19,0,0) # 24-hr time in hr, min, sec
         sitter = Sitter(startTime = startTime, endTime=endTime, bedTime=bedTime)
         self.assertEqual(sitter.startTime, startTime)
         self.assertEqual(sitter.endTime, endTime)
         self.assertEqual(sitter.bedTime, bedTime)
         
     def testSitterTimesAreValid(self):
-        startTime = datetime.time(17,0,0) # 24-hr time in hr, min, sec
-        endTime = datetime.time(21,0,0) # 24-hr time in hr, min, sec
-        bedTime = datetime.time(19,0,0) # 24-hr time in hr, min, sec
+        startTime = time(17,0,0) # 24-hr time in hr, min, sec
+        endTime = time(21,0,0) # 24-hr time in hr, min, sec
+        bedTime = time(19,0,0) # 24-hr time in hr, min, sec
         sitter = Sitter(startTime = startTime, endTime=endTime, bedTime=bedTime)
         self.assertTrue(sitter.validTimes())
         

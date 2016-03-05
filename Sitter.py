@@ -45,7 +45,7 @@ class Sitter(object):
         Output: the difference between them in hours (float)
         '''
         ref = date.today()
-        diff = datetime.combine(ref, time2) - datetime.combine(ref, time1)
+        diff = datetime.combine(ref, time1) - datetime.combine(ref, time2)
         return diff.seconds/3600
         
         

@@ -37,6 +37,10 @@ class Sitter(object):
         Input: an instance of sitter 
         Output: payment due (float)
         '''
+        hours = self.subtractTimes(self.endTime, self.startTime)
+        rate  = 12
+        due   = hours*rate
+        return due
         
     def subtractTimes(self, time1, time2):
         '''

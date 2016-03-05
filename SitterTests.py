@@ -21,6 +21,10 @@ class SitterTest(unittest.TestCase):
     def testSitterTimesAreValid(self):
         self.assertTrue(self.sitter.validTimes())
         
+    def testTimeSubtractionFunction(self):
+        self.assertEqual(1.0,self.sitter.subtractTimes(time(9),time(8)))
+        self.assertEqual(3.0,self.sitter.subtractTimes(time(20),time(17)))
+        
     def testSitterPayCalcNoBedTime(self):
         startTime = time(17,0,0) 
         endTime = time(21,0,0) 

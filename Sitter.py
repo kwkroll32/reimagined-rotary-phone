@@ -1,4 +1,4 @@
-from datetime import time
+from datetime import time, datetime, date
 # A class for the baby sitter 
 
 class Sitter(object):
@@ -30,3 +30,22 @@ class Sitter(object):
             return False
         # if nothing failed, the schedule is valid 
         return True
+    
+    def calcPay(self):
+        '''
+        method to calculate pay for the evening
+        Input: an instance of sitter 
+        Output: payment due (float)
+        '''
+        
+    def subtractTimes(self, time1, time2):
+        '''
+        method to find the difference between two times
+        Input: two datetime.time objects
+        Output: the difference between them in hours (float)
+        '''
+        ref = date.today()
+        diff = datetime.combine(ref, time2) - datetime.combine(ref, time1)
+        return diff.seconds/3600
+        
+        

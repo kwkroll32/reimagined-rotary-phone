@@ -22,10 +22,19 @@ class SitterTest(unittest.TestCase):
         self.assertTrue(self.sitter.validTimes())
         
     def testTimeSubtractionFunction(self):
+        # 9am from 8am
         self.assertEqual(1.0,self.sitter.subtractTimes(time(9),time(8)))
+        # 8pm from 5pm 
         self.assertEqual(3.0,self.sitter.subtractTimes(time(20),time(17)))
+        # midnight from 11pm
         self.assertEqual(1.0,self.sitter.subtractTimes(time(00),time(23)))
+        # 1am from midnight 
         self.assertEqual(1.0,self.sitter.subtractTimes(time(1),time(00)))
+        # 1am from 11pm
+        self.assertEqual(2.0,self.sitter.subtractTimes(time(1),time(23)))
+        # 4am from 5pm
+        self.assertEqual(11.0,self.sitter.subtractTimes(time(4),time(17)))
+        self.assertFalse(11.0==self.sitter.subtractTimes(time(3),time(17)))
         
     def testSitterPayCalcNoBedTime(self):
         startTime = time(17,0,0) 

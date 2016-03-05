@@ -1,5 +1,6 @@
 import unittest
 from datetime import time
+import copy
 
 from Sitter import Sitter
 
@@ -37,14 +38,22 @@ class SitterTest(unittest.TestCase):
         self.assertFalse(11.0==self.sitter.subtractTimes(time(3),time(17)))
         
     def testSitterPayCalcNoBedTime(self):
-        startTime = time(17,0,0) 
-        endTime = time(21,0,0) 
-        bedTime = time(22,0,0) 
-        # sitter works for 4 hrs 
+        # copy the sitter so it can be modified 
+        thisSitter = copy.copy(self.sitter)
+        thisSitter.bedTime = time(22,0,0) 
+        # sitter works for 4 hrs, from 1700 to 2100
         # note that kids never go to bed and end time is before midnight 
-        sitter = Sitter(startTime=startTime, endTime=endTime, bedTime=bedTime)
-        calculatedPay = sitter.calcPay()
-        expectedPay = sitter.payRates['startToBed']*4
+        calculatedPay = thisSitter.calcPay()
+        expectedPay = thisSitter.payRates['startToBed']*4
+        self.assertEqual(calculatedPay, expectedPay)
+    
+    def testSitterPayCalcWithBedTimeBeforeMidnight(self):
+        # use the existing sitter object
+        # works from 1700 to 1900 with kids awake
+        # works from 1900 to 2100 with kids asleep 
+        calculatedPay = self.sitter.calcPay()
+        expectedPay   = self.sitter.payRates['startToBed']*2
+        expectedPay  += self.sitter.payRates['bedToMidnight']*2
         self.assertEqual(calculatedPay, expectedPay)
         
 if __name__ == "__main__":

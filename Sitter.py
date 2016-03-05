@@ -1,7 +1,7 @@
 # A class for the baby sitter 
 
 class Sitter(object):
-    def __init__(self):
+    def __init__(self, startTime, endTime, bedTime):
         # important attributes
         self.startTime = 0
         self.endTime   = 0

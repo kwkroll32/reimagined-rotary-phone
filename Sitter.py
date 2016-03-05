@@ -25,7 +25,7 @@ class Sitter(object):
         if self.startTime < earliestStart:
             return False
         # did we end too late?
-        if self.endTime > latestEnd:
+        if self.endTime < self.startTime and self.endTime > latestEnd:
             return False
         # if nothing failed, the schedule is valid 
         return True

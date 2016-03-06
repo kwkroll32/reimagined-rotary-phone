@@ -21,6 +21,19 @@ class SitterTest(unittest.TestCase):
         
     def testSitterTimesAreValid(self):
         self.assertTrue(self.sitter.validTimes())
+        # copy the sitter so it can be modified 
+        thisSitter = copy.copy(self.sitter)
+        # arrival is too early 
+        thisSitter.startTime = time(14,0,0)
+        self.assertFalse(thisSitter.validTimes())
+        thisSitter = copy.copy(self.sitter)
+        # ending is too late
+        thisSitter.endTime = time(5,0,0)
+        self.assertFalse(thisSitter.validTimes())
+        thisSitter = copy.copy(self.sitter)
+        # start time is equal to leave time
+        thisSitter.endTime = thisSitter.startTime
+        self.assertFalse(thisSitter.validTimes())
         
     def testTimeSubtractionFunction(self):
         # 9am from 8am

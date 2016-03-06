@@ -17,6 +17,8 @@ class Sitter(object):
         method to determine whether the sitter instance is valid 
         Input: an instance of sitter 
         Output: bool 
+        Note: could throw specific errors here if user needs to know what
+              aspect of the time is invalid 
         '''
         # as defined in the problem statement
         # starts no earlier than 5pm and leaves no later than 4AM
@@ -29,6 +31,9 @@ class Sitter(object):
         # did we end too late?
         if self.endTime < self.startTime and self.endTime > latestEnd:
             return False
+        # is the input start time later than the end time? 
+        if self.startTime >= self.endTime:
+            return False
         # if nothing failed, the schedule is valid 
         return True
     
@@ -40,6 +45,8 @@ class Sitter(object):
         '''
         # create a sorted list of times and subset it to start-through-end 
         times = sorted([ self.startTime, self.endTime, self.bedTime, time(00,0,0) ])
+        # re-sort the list to be in a meaningful order for the problem, 
+        # i.e. start, bed, midnight, with end somewhere in between 
         times = times[times.index(self.startTime):] + times[:times.index(self.startTime)] 
         indexOfStart = times.index(self.startTime)
         indexOfEnd   = times.index(self.endTime)
@@ -54,10 +61,11 @@ class Sitter(object):
         '''
         method to find the difference between two times
         Input: two datetime.time objects
-        Output: the difference between them in hours (float)
+        Output: the difference between them in hours (int)
         '''
         ref = date.today()
         diff = datetime.combine(ref, time1) - datetime.combine(ref, time2)
+        # round up to whole hours, as per problem definition 
         return math.ceil(diff.seconds/3600)
         
     def getPayRate(self,time1,time2):
@@ -71,7 +79,8 @@ class Sitter(object):
         Output: the pay rate for the time between (float)
         '''
         midnight = time(00,0,0)
-        # canonical cases, where sitter arrives, kids go to bed, midnight comes, and sitter leaves in that order 
+        # canonical cases, where sitter arrives, kids go to bed, and midnight comes, in that order.
+        # end time may occur any time after arrival.  
         if time1 == self.startTime and (time2 == self.bedTime or time2 == self.endTime):
             return self.payRates['startToBed'] 
         elif time1 == self.bedTime and (time2 == self.endTime or time2 == midnight):

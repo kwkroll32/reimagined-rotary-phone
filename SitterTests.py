@@ -88,8 +88,8 @@ class SitterTest(unittest.TestCase):
         thisSitter.endTime = time(1,0,0)
         # works from 1900 to 0100 with kids asleep 
         calculatedPay = thisSitter.calcPay()
-        expectedPay = thisSitter.payRates['bedToMidnight']*5
-        expectedPay = thisSitter.payRates['midnightToEnd']*1 
+        expectedPay   = thisSitter.payRates['bedToMidnight']*4
+        expectedPay  += thisSitter.payRates['midnightToEnd']*1 
         self.assertEqual(calculatedPay, expectedPay)
         
         

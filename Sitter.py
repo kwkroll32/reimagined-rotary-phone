@@ -70,12 +70,17 @@ class Sitter(object):
         Output: the pay rate for the time between (float)
         '''
         midnight = time(00,0,0)
+        # canonical cases, where sitter arrives, kids go to bed, midnight comes, and sitter leaves in that order 
         if time1 == self.startTime and (time2 == self.bedTime or time2 == self.endTime):
             return self.payRates['startToBed'] 
         elif time1 == self.bedTime and (time2 == self.endTime or time2 == midnight):
             return self.payRates['bedToMidnight']
         elif time1 == midnight and time2 == self.endTime:
             return self.payRates['midnightToEnd']
+        # non-canonical cases 
+        elif time1 == self.startTime and self.startTime > self.bedTime :
+            # sitter arrives after kids are in bed 
+            return self.payRates['bedToMidnight']
         else:
             # an unexpected set of adjacent times 
             print("unable to determine pay rate from {0} to {1}".format(time1, time2 ))

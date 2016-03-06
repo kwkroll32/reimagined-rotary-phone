@@ -1,5 +1,6 @@
 from datetime import time, datetime, date
 import math
+import argparse
 # A class for the baby sitter 
 
 class Sitter(object):
@@ -12,6 +13,17 @@ class Sitter(object):
         self.payRates  = { 'startToBed':    12, \
                            'bedToMidnight': 8,  \
                            'midnightToEnd': 16  }
+    def __str__(self):
+        # method to pretty print the sitter object
+        outstr = ""
+        outstr += "Start Time:\t{0}\n".format(self.startTime)
+        outstr += "Bed   Time:\t{0}\n".format(self.bedTime)
+        outstr += "End   Time:\t{0}\n\n".format(self.endTime)
+        outstr += "${0}/hr from start to bed\n".format(self.payRates['startToBed'])
+        outstr += "${0}/hr from bed to midnight\n".format(self.payRates['bedToMidnight'])
+        outstr += "${0}/hr from midnight to end\n".format(self.payRates['midnightToEnd'])
+        return outstr
+        
     def validTimes(self):
         '''
         method to determine whether the sitter instance is valid 
@@ -95,3 +107,38 @@ class Sitter(object):
             # an unexpected set of adjacent times 
             print("unable to determine pay rate from {0} to {1}".format(time1, time2 ))
             exit()
+            
+def main():
+    parser = argparse.ArgumentParser(description='Calculate pay for an evening of baby sitting.')
+    parser.add_argument('--s', '--startTime', required=True, help='start time in 24hr format [1700] ')
+    parser.add_argument('--e', '--endTime', required=True, help='end time in 24hr format [0100] ')
+    parser.add_argument('--b', '--bedTime', required=True, help='bed time in 24hr format [1900] ')
+    args = parser.parse_args()
+
+    # verify that args are valid
+    for arg in [args.s, args.e, args.b]:
+        if len(list(str(arg))) != 4:
+            # check for hours and minutes present 
+            print("invalid time {0}".format(arg))
+            exit()
+        elif not int(str(arg)[0:2]) < 24 or not int(str(arg)[0:2])>=0:
+            # check that hours are between 0 and 24
+            print("invalid hour {0}".format(arg))
+            exit()
+        elif not int(str(arg)[2:4]) < 60 :
+            # check that minutes are less than 60
+            print("invalid minute {0}".format(arg))
+            exit()
+
+    sitter = Sitter(startTime = time(int(args.s[0:2]), int(args.s[2:])), \
+                    endTime = time(int(args.e[0:2]), int(args.e[2:])),   \
+                    bedTime = time(int(args.b[0:2]),int(args.b[2:])) )
+    if not sitter.validTimes():
+        print("invalid times selected")
+        exit()
+    paymentDue = sitter.calcPay()
+    print(str(sitter))
+    print("Total Due: ${0}".format(paymentDue))
+    
+if __name__ == "__main__":
+    main()

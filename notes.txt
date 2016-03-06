@@ -41,9 +41,10 @@ and with methods to calculate pay from
    kids stay up past midnight. to handle this case, one must decide 
    whether to use the post-midnight or post-bedtime pay rate, since 
    they'll both be valid. the problem statment implies that this 
-   case doens't need to be considered. 
+   case doesn't need to be considered. 
  - it is unclear exactly how fractional hours should be handled 
-   within the bounds of the evening. 
+   within the bounds of the evening. are fractional hours invalid input,
+   or should they simply be rounded?
    E.g. 
    + sitter arrives at 5pm
    + kids go to bed at 5:30pm

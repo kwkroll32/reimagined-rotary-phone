@@ -142,6 +142,21 @@ class SitterTest(unittest.TestCase):
         expectedPay   = thisSitter.payRates['bedToMidnight']*6
         expectedPay  += thisSitter.payRates['midnightToEnd']*1 
         self.assertEqual(calculatedPay, expectedPay)
+    
+    def testSitterPayCalcMostExpensiveConfiguration(self):
+        # sitter arrives at 5pm, kids up until midnight, sitter leaves at 4am 
+        #   doesn't include post-bedtime pay, but includes post-midnight
+        
+        # copy the sitter so it can be modified 
+        thisSitter = copy.copy(self.sitter)
+        thisSitter.bedTime = time(00,0,0)
+        thisSitter.endTime = time(4,0,0)
+        calculatedPay = thisSitter.calcPay()
+        # works from 1700 to 0000 with kids awake 
+        expectedPay   = thisSitter.payRates['startToBed']*7
+        # works from 0000 to 0400 with kids asleep
+        expectedPay  += thisSitter.payRates['midnightToEnd']*4
+        self.assertEqual(calculatedPay, expectedPay)
         
 
         

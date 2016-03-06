@@ -44,6 +44,7 @@ class SitterTest(unittest.TestCase):
         # copy the sitter so it can be modified 
         thisSitter = copy.copy(self.sitter)
         thisSitter.startTime = time(17,15,0)
+        thisSitter.endTime = time(20,15,0)
         # sitter works 1.25 hours with the kids awake, rounding up to 2
         # sitter works 2 hours with the kids asleep 
         calculatedPay = thisSitter.calcPay()

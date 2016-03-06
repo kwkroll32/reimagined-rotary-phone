@@ -42,4 +42,12 @@ and with methods to calculate pay from
    whether to use the post-midnight or post-bedtime pay rate, since 
    they'll both be valid. the problem statment implies that this 
    case doens't need to be considered. 
-    
+ - it is unclear exactly how fractional hours should be handled 
+   within the bounds of the evening. 
+   E.g. 
+   + sitter arrives at 5pm
+   + kids go to bed at 5:30pm
+   + sitter leaves at 6pm
+   thus, does the sitter get paid for 1 hr of pre-bedtime and 1 hr of post-bedtime? 
+   the sitter pay calculator makes this assumption. the pay for this example would be
+   1 hr of pre-bedtime + 1 hr of post-bedtime, even though they were only there for 1 hour.

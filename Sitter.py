@@ -69,7 +69,7 @@ class Sitter(object):
         Output: the pay rate for the time between (float)
         '''
         midnight = time(00,0,0)
-        if time1 == self.startTime and time2 == self.bedTime:
+        if time1 == self.startTime and (time2 == self.bedTime or time2 == self.endTime):
             return self.payRates['startToBed'] 
         elif time1 == self.bedTime and (time2 == self.endTime or time2 == midnight):
             return self.payRates['bedToMidnight']

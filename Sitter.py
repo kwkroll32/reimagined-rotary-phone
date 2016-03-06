@@ -118,9 +118,9 @@ class Sitter(object):
             
 def main():
     parser = argparse.ArgumentParser(description='Calculate pay for an evening of baby sitting.')
-    parser.add_argument('--s', '--startTime', required=True, help='start time in 24hr format [1700] ')
-    parser.add_argument('--e', '--endTime', required=True, help='end time in 24hr format [0100] ')
-    parser.add_argument('--b', '--bedTime', required=True, help='bed time in 24hr format [1900] ')
+    parser.add_argument('--s', '--startTime', required=True, help='start time in 24hr format, e.g. 1700 ')
+    parser.add_argument('--e', '--endTime', required=True, help='end time in 24hr format, e.g. 0100 ')
+    parser.add_argument('--b', '--bedTime', required=True, help='bed time in 24hr format, e.g. 1900 ')
     args = parser.parse_args()
 
     # verify that args are valid

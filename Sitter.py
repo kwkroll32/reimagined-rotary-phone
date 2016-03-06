@@ -39,6 +39,7 @@ class Sitter(object):
         '''
         # create a sorted list of times and subset it to start-through-end 
         times = sorted([ self.startTime, self.endTime, self.bedTime, time(00,0,0) ])
+        times = times[times.index(self.startTime):] + times[:times.index(self.startTime)] 
         indexOfStart = times.index(self.startTime)
         indexOfEnd   = times.index(self.endTime)
         due = 0

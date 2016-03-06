@@ -79,7 +79,7 @@ class SitterTest(unittest.TestCase):
         
     def testSitterPayCalcWithBedTimeBeforeArrivalTime(self):
         # sitter arrives after kids are in bed 
-        #   doesn't include pre-bedtime pay or post-midnight pay
+        #   doesn't include pre-bedtime pay, but includes post-midnight
         
         # copy the sitter so it can be modified 
         thisSitter = copy.copy(self.sitter)
@@ -89,6 +89,21 @@ class SitterTest(unittest.TestCase):
         # works from 1900 to 0100 with kids asleep 
         calculatedPay = thisSitter.calcPay()
         expectedPay   = thisSitter.payRates['bedToMidnight']*4
+        expectedPay  += thisSitter.payRates['midnightToEnd']*1 
+        self.assertEqual(calculatedPay, expectedPay)
+        
+    def testSitterPayCalcWithBedTimeEqualsArrivalTime(self):
+        # sitter arrives the instant kids go to bed 
+        #   doesn't include pre-bedtime pay, but includes post-midnight
+        
+        # copy the sitter so it can be modified 
+        thisSitter = copy.copy(self.sitter)
+        thisSitter.bedTime = time(18,0,0)
+        thisSitter.startTime = time(18,0,0) 
+        thisSitter.endTime = time(1,0,0)
+        # works from 1800 to 0100 with kids asleep 
+        calculatedPay = thisSitter.calcPay()
+        expectedPay   = thisSitter.payRates['bedToMidnight']*6
         expectedPay  += thisSitter.payRates['midnightToEnd']*1 
         self.assertEqual(calculatedPay, expectedPay)
         

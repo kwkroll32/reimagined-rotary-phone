@@ -98,7 +98,13 @@ class Sitter(object):
         if time1 == self.startTime and (time2 == self.bedTime or time2 == self.endTime):
             return self.payRates['startToBed'] 
         elif time1 == self.bedTime and (time2 == self.endTime or time2 == midnight):
-            return self.payRates['bedToMidnight']
+            if self.bedTime != midnight:
+                # did the kids go to bed before midnight?
+                return self.payRates['bedToMidnight']
+            else:
+                # the kids must have gone to bed at midnight 
+                # since bedtime after midnight is invalid 
+                return self.payRates['midnightToEnd']
         elif time1 == midnight and time2 == self.endTime:
             return self.payRates['midnightToEnd']
         # non-canonical cases 

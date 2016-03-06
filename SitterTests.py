@@ -13,7 +13,7 @@ class SitterTest(unittest.TestCase):
 
     def testAlwaysTrue(self):
         self.assertTrue(True)
-        
+       
     def testSitterInit(self):
         self.assertEqual(self.sitter.startTime, self.startTime)
         self.assertEqual(self.sitter.endTime, self.endTime)

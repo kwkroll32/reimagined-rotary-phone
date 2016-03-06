@@ -46,6 +46,8 @@ class Sitter(object):
         # is the input start time later than the end time? 
         if self.startTime >= self.endTime and self.endTime >= earliestStart:
             return False
+        if self.bedTime > time(00,0,0) and self.bedTime < earliestStart:
+            return False
         # if nothing failed, the schedule is valid 
         return True
     

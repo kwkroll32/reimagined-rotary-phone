@@ -35,3 +35,11 @@ and with methods to calculate pay from
  - bed to midnight 
  - midnight to end 
  ? may be one or more functions 
+ 
+ Unaccounted for Edge Cases:
+ - pay calculator cannot handle a case when the sitter lets the 
+   kids stay up past midnight. to handle this case, one must decide 
+   whether to use the post-midnight or post-bedtime pay rate, since 
+   they'll both be valid. the problem statment implies that this 
+   case doens't need to be considered. 
+    

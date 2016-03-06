@@ -37,6 +37,20 @@ class SitterTest(unittest.TestCase):
         self.assertEqual(11.0,self.sitter.subtractTimes(time(4),time(17)))
         self.assertFalse(11.0==self.sitter.subtractTimes(time(3),time(17)))
         
+    def testSitterCalcWithFractionalHours(self):
+        # sitter watches the kids for the evening 
+        #   includes post-bedtime pay, but no midnight pay 
+        
+        # copy the sitter so it can be modified 
+        thisSitter = copy.copy(self.sitter)
+        thisSitter.startTime = time(17,15,0)
+        # sitter works 1.25 hours with the kids awake, rounding up to 2
+        # sitter works 2 hours with the kids asleep 
+        calculatedPay = thisSitter.calcPay()
+        expectedPay   = self.sitter.calcPay()
+        # the sitter should earn the same pay whether they show up at 5 or 5:15, due to rounding up. 
+        self.assertEqual(calculatedPay, expectedPay)
+        
     def testSitterPayCalcNoBedTime(self):
         # sitter watches the kids for the evening. 
         #   no bedtime pay and no midnight pay
@@ -107,7 +121,7 @@ class SitterTest(unittest.TestCase):
         expectedPay  += thisSitter.payRates['midnightToEnd']*1 
         self.assertEqual(calculatedPay, expectedPay)
         
-        
+
         
 if __name__ == "__main__":
     unittest.main()

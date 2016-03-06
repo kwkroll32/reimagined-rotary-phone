@@ -37,9 +37,15 @@ class Sitter(object):
         Input: an instance of sitter 
         Output: payment due (float)
         '''
-        hours = self.subtractTimes(self.endTime, self.startTime)
-        rate  = 12
-        due   = hours*rate
+        # create a sorted list of times and subset it to start-through-end 
+        times=sorted([ self.startTime, self.endTime, self.bedTime, time(00,0,0) ])
+        indexOfStart = times.index(self.startTime)
+        indexOfEnd   = times.index(self.endTime)
+        due = 0
+        for timesIndex in range(indexOfStart, indexOfEnd):
+            hours = self.subtractTimes(times[timesIndex+1], times[timesIndex])
+            rate  = 12
+            due  += hours*rate
         return due
         
     def subtractTimes(self, time1, time2):

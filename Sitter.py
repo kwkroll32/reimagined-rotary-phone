@@ -38,13 +38,13 @@ class Sitter(object):
         Output: payment due (float)
         '''
         # create a sorted list of times and subset it to start-through-end 
-        times=sorted([ self.startTime, self.endTime, self.bedTime, time(00,0,0) ])
+        times = sorted([ self.startTime, self.endTime, self.bedTime, time(00,0,0) ])
         indexOfStart = times.index(self.startTime)
         indexOfEnd   = times.index(self.endTime)
         due = 0
         for timesIndex in range(indexOfStart, indexOfEnd):
             hours = self.subtractTimes(times[timesIndex+1], times[timesIndex])
-            rate  = 12
+            rate  = self.getPayRate(times[timesIndex], times[timesIndex+1])
             due  += hours*rate
         return due
         
@@ -58,4 +58,24 @@ class Sitter(object):
         diff = datetime.combine(ref, time1) - datetime.combine(ref, time2)
         return diff.seconds/3600
         
-        
+    def getPayRate(self,time1,time2):
+        '''
+        method to get the pay rate for the given input times.
+        note that times must be adjacent
+            i.e. start=5pm, bed=9pm, midnight=12am, end=1am
+            must execute as getPayRate(5pm, 9pm), getPayRate(9pm,12am), getPayRate(12am,1am)
+            and NOT as getPayRate(5pm,1am), since that block of time spans multiple pay rates.
+        Input: two datetime.time objects
+        Output: the pay rate for the time between (float)
+        '''
+        midnight = time(00,0,0)
+        if time1 == self.startTime and time2 == self.bedTime:
+            return self.payRates['startToBed'] 
+        elif time1 == self.bedTime and (time2 == self.endTime or time2 == midnight):
+            return self.payRates['bedToMidnight']
+        elif time1 == midnight and time2 == self.endTime:
+            return self.payRates['midnightToEnd']
+        else:
+            # an unexpected set of adjacent times 
+            print("unable to determine pay rate from {0} to {1}".format(time1, time2 ))
+            exit()

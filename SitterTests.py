@@ -83,8 +83,9 @@ class SitterTest(unittest.TestCase):
         
         # copy the sitter so it can be modified 
         thisSitter = copy.copy(self.sitter)
-        thisSitter.bedTime = time(17,0,0)
-        thisSitter.startTime = time(19,0,0) 
+        thisSitter.bedTime = time(18,0,0)
+        thisSitter.startTime = time(20,0,0) 
+        thisSitter.endTime = time(1,0,0)
         # works from 1900 to 0100 with kids asleep 
         calculatedPay = thisSitter.calcPay()
         expectedPay = thisSitter.payRates['bedToMidnight']*5

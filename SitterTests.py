@@ -56,5 +56,17 @@ class SitterTest(unittest.TestCase):
         expectedPay  += self.sitter.payRates['bedToMidnight']*2
         self.assertEqual(calculatedPay, expectedPay)
         
+    def testSitterPayCalcWithBedTimeBeforeMidnightAndEndAfterMidnight(self):
+        # copy the sitter so it can be modified 
+        thisSitter = copy.copy(self.sitter)
+        thisSitter.endTime = time(1,0,0) 
+        # works from 1700 to 1900 with kids awake
+        # works from 1900 to 0100 with kids asleep
+        calculatedPay = thisSitter.calcPay()
+        expectedPay = thisSitter.payRates['startToBed']*2 
+        expectedPay += thisSitter.payRates['bedToMidnight']*5
+        expectedPay += thisSitter.payRates['midnightToEnd']*1
+        self.assertEqual(calculatedPay, expectedPay)
+        
 if __name__ == "__main__":
     unittest.main()

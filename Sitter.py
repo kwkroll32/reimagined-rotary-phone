@@ -1,4 +1,5 @@
 from datetime import time, datetime, date
+import math
 # A class for the baby sitter 
 
 class Sitter(object):
@@ -57,7 +58,7 @@ class Sitter(object):
         '''
         ref = date.today()
         diff = datetime.combine(ref, time1) - datetime.combine(ref, time2)
-        return diff.seconds/3600
+        return math.ceil(diff.seconds/3600)
         
     def getPayRate(self,time1,time2):
         '''
